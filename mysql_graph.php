@@ -55,6 +55,12 @@ $graph->title->Set("PlantBot Sensor Readings");
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
 // Ensure anti-aliasing is off. If it is not, you can SetWeight() all day and nothing will change.
 $graph->img->SetAntiAliasing(false);
+$graph->xaxis->SetLabelAngle(45);
+$graph->xaxis->scale->SetDateFormat('Y:M:d:D:H:i');
+$graph->legend->SetPos(0.37,0.07,'right','center');
+$graph->legend->SetFrameWeight(2);
+$graph->legend->SetColor('black','black');
+$graph->xgrid->Show(true,false);
 // Use 20% "grace" to get slightly larger scale then min/max of
 // data
 $graph->yscale->SetGrace(0);

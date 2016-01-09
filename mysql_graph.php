@@ -7,8 +7,10 @@ require_once ('../tools/jpgraph/src/jpgraph_error.php');
 require_once ('../tools/jpgraph/src/jpgraph_date.php');
 
 
-$x_axis = array();
-$y_axis = array();
+$dates= array();
+$light = array();
+$pressure = array();
+$moisture = array();
 $i = 0;
 
  
@@ -20,16 +22,13 @@ if (mysqli_connect_errno()) {
  
 $result = mysqli_query($con,"(SELECT * FROM sens_vals ORDER BY id DESC LIMIT 25) ORDER BY id ASC");
 
- 
- 
 while($row = mysqli_fetch_array($result)) {
-	$x_axis[$i] = strtotime($row["date"]);
-	//echo gettype($x_axis[$i]),"<br />";
-	$y_axis[$i] =  $row["Light"];
-	//echo strtotime($x_axis[$i]),"<br />";
+	$dates[$i] = strtotime($row["date"]);
+	$light[$i] =  $row["Light"];
+	$pressure[$i] =  $row["Pressure"];
+	$moisture[$i] =  $row["Moisture"];
 	$i++;
 	
- 
 }
 
 
@@ -52,24 +51,36 @@ $graph->img->SetMargin(40,40,40,40);
 $graph->img->SetAntiAliasing();
 $graph->SetScale("datlin");
 $graph->SetShadow();
-$graph->title->Set("Example of line centered plot");
-$graph->xaxis->SetLabelAngle(45);
+$graph->title->Set("PlantBot Sensor Readings");
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
-
-
+// Ensure anti-aliasing is off. If it is not, you can SetWeight() all day and nothing will change.
+$graph->img->SetAntiAliasing(false);
 // Use 20% "grace" to get slightly larger scale then min/max of
 // data
 $graph->yscale->SetGrace(0);
-
-
-$p1 = new LinePlot($y_axis,$x_axis);
-$p1->mark->SetType(MARK_FILLEDCIRCLE);
-$p1->mark->SetFillColor("red");
-$p1->mark->SetWidth(4);
+$p1 = new LinePlot($light,$dates);
 $p1->SetColor("blue");
 $p1->SetCenter();
+$p1->SetLegend("light");
+
+
+$p2 = new lineplot($pressure,$dates);
+$p2->setColor("orange");
+$p2->SetLegend("pressure");
+
+$p3 = new lineplot($moisture,$dates);
+$p3->setColor("yellow");
+$p3->SetLegend("moisture");
+
 $graph->Add($p1);
+$graph->Add($p2);
+$graph->Add($p3);
+
+$p1->SetWeight(3);
+$p2->SetWeight(3);
+$p3->SetWeight(3);
 
 $graph->Stroke();
+
 
 ?>

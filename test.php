@@ -1,7 +1,3 @@
-<!DOCTYPE html>
-<html>
-<body>
-
 
 <?php // content="text/plain; charset=utf-8"
  
@@ -42,7 +38,29 @@ while($row = mysqli_fetch_array($result)) {
  
      
     mysqli_close($con);
-?>
+	
+	$graph = new Graph(800,500);
+$graph->img->SetMargin(40,40,40,40);	
+$graph->img->SetAntiAliasing();
+$graph->SetScale("textlin");
+$graph->SetShadow();
+$graph->title->Set("Example of line centered plot");
+$graph->title->SetFont(FF_FONT1,FS_BOLD);
 
-</body>
-</html>
+
+// Use 20% "grace" to get slightly larger scale then min/max of
+// data
+$graph->yscale->SetGrace(0);
+
+
+$p1 = new LinePlot($y_axis);
+$p1->mark->SetType(MARK_FILLEDCIRCLE);
+$p1->mark->SetFillColor("red");
+$p1->mark->SetWidth(4);
+$p1->SetColor("blue");
+$p1->SetCenter();
+$graph->Add($p1);
+
+$graph->Stroke();
+
+?>

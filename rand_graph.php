@@ -1,9 +1,9 @@
 <?php // content="text/plain; charset=utf-8"
 
 define('__ROOT__', dirname(dirname(__FILE__))); 
-require_once ('../jpgraph.php');
-require_once ('../jpgraph_line.php');
-require_once ('../jpgraph_error.php');
+require_once ('../tools/jpgraph/src/jpgraph.php');
+require_once ('../tools/jpgraph/src/jpgraph_line.php');
+require_once ('../tools/jpgraph/src/jpgraph_error.php');
 
 $y_axis = array();
 

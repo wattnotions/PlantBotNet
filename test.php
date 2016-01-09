@@ -13,7 +13,7 @@ require_once ('../tools/jpgraph/src/jpgraph_line.php');
 require_once ('../tools/jpgraph/src/jpgraph_error.php');
 require_once ('../tools/jpgraph/src/jpgraph_date.php');
  
-echo "hello";
+echo "hello!";
 $x_axis = array();
 $y_axis = array();
 $i = 0;
